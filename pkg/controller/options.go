@@ -65,9 +65,13 @@ type Options struct {
 
 // ForControllerRuntime extracts options for controller-runtime.
 func (o Options) ForControllerRuntime() controller.Options {
+	recoverPanic := new(bool)
+	*recoverPanic = true
+
 	return controller.Options{
 		MaxConcurrentReconciles: o.MaxConcurrentReconciles,
 		RateLimiter:             ratelimiter.NewController(),
+		RecoverPanic:            recoverPanic,
 	}
 }
 
